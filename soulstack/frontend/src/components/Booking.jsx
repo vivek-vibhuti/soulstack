@@ -209,7 +209,8 @@ const Booking = () => {
                   </div>
                   <div className="flex items-center gap-3 text-gray-400 transition-colors duration-200 hover:text-[#64f4ac]">
                     <span className="flex items-center justify-center w-8 h-8 bg-gray-800 border border-gray-700 rounded-lg">📞</span>
-                    <a href="tel:+918521037825" className="font-medium">+91 8521037825</a>
+                    <a href="tel:+918521037825" className="font-medium">+91 8873953855
+                    </a>
                   </div>
                   <div className="flex items-center gap-3 text-gray-400">
                     <span className="flex items-center justify-center w-8 h-8 bg-gray-800 border border-gray-700 rounded-lg">🕒</span>
