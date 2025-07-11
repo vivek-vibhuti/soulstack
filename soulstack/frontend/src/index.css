@@ -121,3 +121,28 @@
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
 }
+.glow-border {
+  border: 2px solid transparent;
+  border-radius: 0.375rem; /* rounded-md */
+  background: linear-gradient(120deg, #000, #000) padding-box,
+              linear-gradient(120deg, transparent, #64f4ac, transparent) border-box;
+  animation: move-glow 3s linear infinite;
+}
+
+@keyframes move-glow {
+  0% {
+    background: linear-gradient(0deg, transparent, #64f4ac, transparent) border-box;
+  }
+  25% {
+    background: linear-gradient(90deg, transparent, #64f4ac, transparent) border-box;
+  }
+  50% {
+    background: linear-gradient(180deg, transparent, #64f4ac, transparent) border-box;
+  }
+  75% {
+    background: linear-gradient(270deg, transparent, #64f4ac, transparent) border-box;
+  }
+  100% {
+    background: linear-gradient(360deg, transparent, #64f4ac, transparent) border-box;
+  }
+}

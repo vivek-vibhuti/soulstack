@@ -1,4 +1,6 @@
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 const Portfolio = () => {
   const projects = [
@@ -52,19 +54,53 @@ const Portfolio = () => {
     }
   ]
 
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger)
+
+    // Animate each project card
+    gsap.utils.toArray('.project-card').forEach((card, index) => {
+      gsap.fromTo(
+        card,
+        {
+          opacity: 0,
+          y: 50,
+        },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: card,
+            start: 'top 85%',
+            end: 'top 50%',
+            scrub: false,
+            toggleActions: 'play none none none',
+          },
+          delay: index * 0.1, // Stagger effect
+        }
+      )
+    })
+
+    // Cleanup ScrollTrigger on component unmount
+    return () => {
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill())
+    }
+  }, [])
+
   return (
-    <section id="portfolio" className="py-16 bg-gray-50">
+    <section id="portfolio" className="py-16 bg-gray-900">
       <div className="container px-4 mx-auto">
         <div className="mb-12 text-center">
-          <h2 className="mb-3 text-3xl font-extrabold text-gray-900">Our Real Projects</h2>
-          <p className="text-lg text-gray-600">Products developed for real Indian and global businesses</p>
+          <h2 className="mb-3 text-3xl font-extrabold text-white">Our Real Projects</h2>
+          <p className="text-lg text-gray-300">Products developed for real Indian and global businesses</p>
         </div>
 
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
           {projects.map((project, index) => (
             <div
               key={index}
-              className="overflow-hidden transition duration-300 transform bg-white shadow-sm rounded-xl hover:shadow-md hover:-translate-y-1"
+              className="overflow-hidden transition duration-300 transform bg-gray-800 shadow-sm project-card rounded-xl hover:shadow-xl hover:-translate-y-1"
             >
               <div className="relative w-full h-48 overflow-hidden">
                 <img
@@ -72,26 +108,26 @@ const Portfolio = () => {
                   alt={project.title}
                   className="object-cover w-full h-full transition-transform duration-300 ease-in-out group-hover:scale-105"
                 />
-                <div className="absolute inset-0 flex items-center justify-center transition-opacity duration-300 opacity-0 bg-gradient-to-br from-primary-500/80 to-secondary-500/80 hover:opacity-100">
+                <div className="absolute inset-0 flex items-center justify-center transition-opacity duration-300 opacity-0 bg-gradient-to-br from-green-500/80 to-blue-500/80 hover:opacity-100">
                   <a
                     href={project.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-4 py-2 font-semibold text-white rounded-lg shadow bg-white/80 hover:bg-white/90"
+                    className="px-4 py-2 font-semibold text-gray-900 rounded-lg shadow bg-white/90 hover:bg-white/100"
                   >
                     View Project
                   </a>
                 </div>
               </div>
               <div className="p-4">
-                <h3 className="mb-2 text-lg font-semibold text-gray-900">{project.title}</h3>
-                <p className="mb-3 text-xs text-gray-500">{project.category}</p>
-                <p className="mb-4 text-sm text-gray-700">{project.description}</p>
+                <h3 className="mb-2 text-lg font-semibold text-white">{project.title}</h3>
+                <p className="mb-3 text-xs text-gray-400">{project.category}</p>
+                <p className="mb-4 text-sm text-gray-300">{project.description}</p>
                 <div className="flex flex-wrap gap-2">
                   {project.technologies.map((tech, idx) => (
                     <span
                       key={idx}
-                      className="px-2 py-1 text-xs text-gray-800 bg-gray-100 rounded-full"
+                      className="px-2 py-1 text-xs text-gray-200 bg-gray-700 rounded-full"
                     >
                       {tech}
                     </span>

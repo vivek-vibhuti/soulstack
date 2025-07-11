@@ -6,6 +6,40 @@ export default {
   ],
   theme: {
     extend: {
+      animation: {
+        'glow': 'glowPulse 1.5s ease-in-out infinite',
+        'fade-in': 'fadeIn 0.5s ease-out',
+        'slide-up': 'slideUp 0.5s ease-out',
+        'modal-in': 'modalIn 0.3s ease-out',
+        'float': 'float 6s ease-in-out infinite',
+        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+      },
+      keyframes: {
+        glowPulse: {
+          '0%, 100%': { boxShadow: '0 0 6px 2px #00ffff44' },
+          '50%': { boxShadow: '0 0 12px 4px #00ffffaa' },
+        },
+        fadeIn: {
+          '0%': { opacity: '0', transform: 'translateY(20px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        slideUp: {
+          '0%': { opacity: '0', transform: 'translateY(30px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        modalIn: {
+          '0%': { opacity: '0', transform: 'translateY(-20px) scale(0.95)' },
+          '100%': { opacity: '1', transform: 'translateY(0) scale(1)' },
+        },
+        float: {
+          '0%, 100%': { transform: 'translateY(0px)' },
+          '50%': { transform: 'translateY(-20px)' },
+        },
+        pulse: {
+          '0%, 100%': { opacity: '1' },
+          '50%': { opacity: '0.6' },
+        },
+      },
       colors: {
         primary: {
           50: '#fdf2f8',
@@ -47,7 +81,7 @@ export default {
           500: '#10B981',
         },
         warning: {
-          500: '#F59E0B', // Note: Same as yellowAccent.500 - consider consolidating
+          500: '#F59E0B',
         },
         error: {
           500: '#EF4444',
@@ -59,35 +93,6 @@ export default {
       spacing: {
         '18': '4.5rem',
         '88': '22rem',
-      },
-      animation: {
-        'fade-in': 'fadeIn 0.5s ease-out',
-        'slide-up': 'slideUp 0.5s ease-out',
-        'modal-in': 'modalIn 0.3s ease-out',
-        'float': 'float 6s ease-in-out infinite', // Added from index.css
-        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite', // Added from index.css
-      },
-      keyframes: {
-        fadeIn: {
-          '0%': { opacity: '0', transform: 'translateY(20px)' },
-          '100%': { opacity: '1', transform: 'translateY(0)' },
-        },
-        slideUp: {
-          '0%': { opacity: '0', transform: 'translateY(30px)' },
-          '100%': { opacity: '1', transform: 'translateY(0)' },
-        },
-        modalIn: {
-          '0%': { opacity: '0', transform: 'translateY(-20px) scale(0.95)' },
-          '100%': { opacity: '1', transform: 'translateY(0) scale(1)' },
-        },
-        float: {
-          '0%, 100%': { transform: 'translateY(0px)' },
-          '50%': { transform: 'translateY(-20px)' },
-        },
-        pulse: {
-          '0%, 100%': { opacity: '1' },
-          '50%': { opacity: '0.6' },
-        },
       },
       boxShadow: {
         'custom': '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',

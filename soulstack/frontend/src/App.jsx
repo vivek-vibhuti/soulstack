@@ -11,9 +11,9 @@ import Footer from './components/Footer'
 function App() {
   return (
     <Router>
-      <div className="App w-full min-h-screen overflow-x-hidden">
+      <div className="w-full min-h-screen overflow-x-hidden App">
         <Header />
-        <main className="w-full">
+        <main className="w-">
           <Hero />
           <Services />
           <About />

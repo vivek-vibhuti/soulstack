@@ -1,4 +1,6 @@
-import React from 'react';
+import { useEffect } from 'react'
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 const Testimonials = () => {
   const testimonials = [
@@ -48,15 +50,49 @@ const Testimonials = () => {
 
   const renderStars = (rating) =>
     Array.from({ length: 5 }, (_, i) => (
-      <span key={i} className={`text-sm ${i < rating ? 'text-yellow-400' : 'text-gray-300'}`}>★</span>
+      <span key={i} className={`text-sm ${i < rating ? 'text-yellow-400' : 'text-gray-600'}`}>★</span>
     ));
 
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger)
+
+    // Animate each testimonial card
+    gsap.utils.toArray('.testimonial-card').forEach((card, index) => {
+      gsap.fromTo(
+        card,
+        {
+          opacity: 0,
+          y: 50,
+        },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: card,
+            start: 'top 85%',
+            end: 'top 50%',
+            scrub: false,
+            toggleActions: 'play none none none',
+          },
+          delay: index * 0.1, // Stagger effect
+        }
+      )
+    })
+
+    // Cleanup ScrollTrigger on component unmount
+    return () => {
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill())
+    }
+  }, [])
+
   return (
-    <section className="py-20 bg-white section">
+    <section className="py-20 bg-gray-900 section">
       <div className="container px-4 mx-auto">
         <div className="mb-16 text-center">
-          <h2 className="mb-4 text-4xl font-bold text-primary-500">What Our Clients Say</h2>
-          <p className="max-w-2xl mx-auto text-xl text-gray-600">
+          <h2 className="mb-4 text-4xl font-bold text-white">What Our Clients Say</h2>
+          <p className="max-w-2xl mx-auto text-xl text-gray-300">
             Real feedback from real clients who've experienced the Soulstack difference.
           </p>
         </div>
@@ -65,24 +101,24 @@ const Testimonials = () => {
           {testimonials.map((testimonial, index) => (
             <div
               key={index}
-              className="relative p-8 transition-all duration-300 transform bg-white border border-gray-200 shadow-lg rounded-2xl hover:border-primary-500 hover:shadow-xl hover:scale-105"
+              className="relative p-8 transition-all duration-300 transform bg-gray-800 border border-gray-700 shadow-lg testimonial-card rounded-2xl hover:border-green-500 hover:shadow-xl hover:scale-105"
             >
-              <div className="absolute font-serif text-5xl leading-none select-none -top-4 left-6 text-primary-500 opacity-20">“</div>
+              <div className="absolute font-serif text-5xl leading-none text-green-500 select-none -top-4 left-6 opacity-20">“</div>
               
               <div className="relative z-10 flex items-center gap-4 mb-6">
                 <img
                   src={testimonial.image}
                   alt={testimonial.name}
-                  className="object-cover w-16 h-16 border-4 rounded-full border-primary-500"
+                  className="object-cover w-16 h-16 border-4 border-green-500 rounded-full"
                 />
                 <div>
-                  <h4 className="text-lg font-semibold text-gray-900">{testimonial.name}</h4>
-                  <p className="text-sm text-gray-600">{testimonial.role}</p>
+                  <h4 className="text-lg font-semibold text-white">{testimonial.name}</h4>
+                  <p className="text-sm text-gray-400">{testimonial.role}</p>
                   <div className="flex gap-1 mt-1">{renderStars(testimonial.rating)}</div>
                 </div>
               </div>
 
-              <p className="relative z-10 italic leading-relaxed text-gray-700">
+              <p className="relative z-10 italic leading-relaxed text-gray-300">
                 “{testimonial.content}”
               </p>
             </div>
