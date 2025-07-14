@@ -93,20 +93,35 @@ const Booking = () => {
 
   const sendBookingRequest = async (data) => {
     try {
-      const response = await axios.post('https://soulstack-app-latest-1.onrender.com/api/booking/submit', data, {
+    const response = await axios.post(
+      "https://soulstack-app-latest-1.onrender.com/api/booking/submit",
+      data,
+      {
         headers: {
           'Content-Type': 'application/json',
         },
-      });
-      return { success: true, data: response.data };
-    } catch (err) {
-      console.error('Booking error:', err);
-      return { 
-        success: false, 
-        error: err.response?.data || err.message || 'Unknown error' 
-      };
-    }
-  };
+        withCredentials: false, // Set to true only if cookies/session used
+      }
+    );
+
+    return {
+      success: true,
+      data: response.data,
+    };
+  } catch (err) {
+    console.error('❌ Booking error:', {
+      message: err.message,
+      url: err.config?.url,
+      status: err.response?.status,
+      data: err.response?.data,
+    });
+
+    return {
+      success: false,
+      error: err.response?.data || err.message || 'Unknown error',
+    };
+  }
+};
 
   const handleSubmit = async (e) => {
     e.preventDefault();
